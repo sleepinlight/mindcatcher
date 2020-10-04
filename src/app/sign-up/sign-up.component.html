@@ -1,0 +1,7 @@
+<div class="center-screen">
+	<div class="card card-1" style="width: 300px; height: 300px;">
+		<input [(ngModel)]="credentials.emailAddress" />
+		<input [(ngModel)]="credentials.password" />
+		<button [disabled]="!fieldsAreValid(credentials)" class="btn btn-primary btn-celadon" (click)="createAccount(credentials)">Create Account</button>
+	</div>
+</div>
