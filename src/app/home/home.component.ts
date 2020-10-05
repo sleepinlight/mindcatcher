@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { LinkprocessorService } from "./linkprocessor.service";
+import { take, finalize } from "rxjs/operators";
 
 @Component({
   selector: "app-home",
@@ -7,7 +8,7 @@ import { LinkprocessorService } from "./linkprocessor.service";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  title = "mindcatcher";
+  title: string = "mindcatcher";
   focusedUrl: string;
   loading: boolean = false;
   stagedFragments: any[] = [];
@@ -19,15 +20,18 @@ export class HomeComponent implements OnInit {
 
   getMetadata() {
     if (this.focusedUrl) {
-      // this.linkProcessor.processLink(this.focusedUrl).subscribe((res) => {
-      //   console.log(
-      //     this.stagedFragments.push(this.getMetaContent(this.processHTML(res)))
-      //   );
-      // });
-      this.linkProcessor.textOtherExp(this.focusedUrl).subscribe((res) => {
-        console.log(res);
-        // this.stagedFragments.push(this.onSetupFragment(res.result));
-      });
+      this.loading = true;
+      this.linkProcessor
+        .textOtherExp(this.focusedUrl)
+        .pipe(
+          finalize(() => {
+            this.loading = false;
+          })
+        )
+        .subscribe((res) => {
+          console.log(res);
+          this.stagedFragments.push(this.onSetupFragment(res.metadata));
+        });
     }
   }
 
@@ -36,10 +40,11 @@ export class HomeComponent implements OnInit {
       this.fragmentId += 1;
       return {
         id: this.fragmentId,
-        title: ogData.ogTitle || ogData.ogSiteName || "",
-        url: ogData.ogUrl || "",
-        originalUrl: ogData.requestUrl || this.focusedUrl || "",
-        img: ogData.ogImage ? ogData.ogImage.url : "",
+        title: ogData.title || "",
+        description: ogData.description || "",
+        url: ogData.url || "",
+        originalUrl: ogData.requestUrl || "",
+        img: ogData.image ? ogData.logo : "",
       };
     }
   }
