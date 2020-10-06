@@ -8,9 +8,11 @@ import { LinkprocessorService } from "./home/linkprocessor.service";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { AngularFireModule } from "@angular/fire";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { environment } from "@src/environments/environment";
 import { AuthenticationService } from "./shared/auth/authentication.service";
 import { SignUpComponent } from "./sign-up/sign-up.component";
+import { FragmentsService } from "./shared/firestore/fragments.service";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, SignUpComponent],
@@ -21,7 +23,12 @@ import { SignUpComponent } from "./sign-up/sign-up.component";
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
-  providers: [LinkprocessorService, AuthenticationService],
+  providers: [
+    LinkprocessorService,
+    AuthenticationService,
+    FragmentsService,
+    AngularFirestore,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { LinkprocessorService } from "./linkprocessor.service";
 import { take, finalize } from "rxjs/operators";
+import { FragmentsService } from "../shared/firestore/fragments.service";
 
 @Component({
   selector: "app-home",
@@ -14,7 +15,10 @@ export class HomeComponent implements OnInit {
   stagedFragments: any[] = [];
   fragmentId: number = 1;
 
-  constructor(private linkProcessor: LinkprocessorService) {}
+  constructor(
+    private linkProcessor: LinkprocessorService,
+    private fragmentsService: FragmentsService
+  ) {}
 
   ngOnInit() {}
 
@@ -47,6 +51,12 @@ export class HomeComponent implements OnInit {
         img: ogData.image ? ogData.logo : "",
       };
     }
+  }
+
+  testFirebase() {
+    this.fragmentsService.testService().subscribe((data) => {
+      console.log(data);
+    });
   }
 
   // getMetaContent(html) {
