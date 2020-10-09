@@ -13,9 +13,15 @@ import { environment } from "@src/environments/environment";
 import { AuthenticationService } from "./shared/auth/authentication.service";
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { FragmentsService } from "./shared/firestore/fragments.service";
+import { MenuSidebarComponent } from "./menu-sidebar/menu-sidebar.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SignUpComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SignUpComponent,
+    MenuSidebarComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
