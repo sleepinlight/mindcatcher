@@ -6,7 +6,7 @@ import { FragmentsService } from "../shared/firestore/fragments.service";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
+  styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
   title: string = "mindcatcher";
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
             this.loading = false;
           })
         )
-        .subscribe((res) => {
+        .subscribe(res => {
           console.log(res);
           this.stagedFragments.push(this.onSetupFragment(res.metadata));
         });
@@ -48,13 +48,19 @@ export class HomeComponent implements OnInit {
         description: ogData.description || "",
         url: ogData.url || "",
         originalUrl: ogData.requestUrl || "",
-        img: ogData.image ? ogData.logo : "",
+        img: ogData.image ? ogData.logo : ""
       };
     }
   }
 
   testFirebase() {
-    this.fragmentsService.testService().subscribe((data) => {
+    this.fragmentsService.testService().subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  testFirebaseLoad() {
+    this.fragmentsService.testGetService().subscribe(data => {
       console.log(data);
     });
   }
